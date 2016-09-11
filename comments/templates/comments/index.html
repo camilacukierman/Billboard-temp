@@ -20,7 +20,18 @@
 
 
     <div class="maintitle">BILBOARD</div>
+{{ user }}
+{% if user.is_anonymous %}
+<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+{% else %}
+<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+{% endif %}
 
+<br/>
+{% block content %}
+{% endblock %}
+
+{% if user.is_authenticated %}
     {% if latest_message %}
 
     {% for message in latest_message %}
@@ -69,27 +80,6 @@
 </div>
 <div class="col-md-3 "></div>
 
-
-{{ user }}
-{% if user.is_anonymous %}
-<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
-{% else %}
-<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
-{% endif %}
-
-<br/>
-
-{% if user.is_authenticated %}
-{% if latest_question_list %}
-<ul>
-    {% for question in latest_message %}
-    <li><a href="{% url 'comments:detail' question.id %}">{{ message.message_text
-        }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No polls are available.</p>
-{% endif %}
 {% endif %}
 
 </body>
